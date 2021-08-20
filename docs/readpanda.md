@@ -3,6 +3,9 @@ Streaming PoC
 Create a K8s cluster locally
 minikube start --memory=8Gi --cpus=2 --driver=hyperkit --profile streaming-poc
 
+or
+kind create cluster
+
 Use RedPanda instead of Kafka
 https://vectorized.io/docs/quick-start-kubernetes/
 
