@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: streaming-poc
+  labels:
+    app: streaming-poc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: streaming-poc
+  template:
+    metadata:
+      labels:
+        app: streaming-poc
+    spec:
+      containers:
+      - name: streaming-poc
+        image: streaming-poc:latest
+        ports:
+        - containerPort: 80
