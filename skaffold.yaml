@@ -8,6 +8,16 @@ build:
     docker:
       dockerfile: Dockerfile
 deploy:
+  helm:
+    releases:
+      - name: cert-manager
+        repo: https://charts.jetstack.io
+        remoteChart: cert-manager
+        version: v1.2.0
+        namespace: cert-manager
+        createNamespace: true
+        setValues:
+          installCRDs: true
   kubectl:
     manifests:
     - deploy/dummy.yaml
