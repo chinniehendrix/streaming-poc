@@ -21,12 +21,15 @@ deploy:
         createNamespace: true
         setValues:
           installCRDs: true
+        wait: true
       - name: redpanda
         repo: https://charts.vectorized.io/
         remoteChart: redpanda-operator
         version: v21.7.6
         namespace: redpanda-system
         createNamespace: true
+        wait: true
   kubectl:
     manifests:
     - deploy/dummy.yaml
+    - deploy/redpanda/cluster.yaml
