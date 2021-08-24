@@ -28,6 +28,8 @@ RedPanda installation:
 helm repo add redpanda https://charts.vectorized.io/ && \
 helm repo update
 
+export VERSION=$(curl -s https://api.github.com/repos/vectorizedio/redpanda/releases/latest | jq -r .tag_name)
+
 kubectl apply \
 -k https://github.com/vectorizedio/redpanda/src/go/k8s/config/crd?ref=$VERSION
 
