@@ -28,6 +28,8 @@ RedPanda installation:
 helm repo add redpanda https://charts.vectorized.io/ && \
 helm repo update
 
+export VERSION=$(curl -s https://api.github.com/repos/vectorizedio/redpanda/releases/latest | jq -r .tag_name)
+
 kubectl apply \
 -k https://github.com/vectorizedio/redpanda/src/go/k8s/config/crd?ref=$VERSION
 
@@ -38,31 +40,31 @@ helm install \
 redpanda/redpanda-operator
 
 Create a test one-node RP cluster
-kubectl create ns chat-with-me
+kubectl create ns redpanda
 kubectl apply \
--n chat-with-me \
+-n redpanda \
 -f https://raw.githubusercontent.com/vectorizedio/redpanda/dev/src/go/k8s/config/samples/one_node_cluster.yaml
 
 Use RPK to test the cluster
 
 Check the status of the cluster
-kubectl -n chat-with-me run -ti --rm \
+kubectl -n redpanda run -ti --rm \
 --restart=Never \
 --image vectorized/redpanda:$VERSION \
--- rpk --brokers one-node-cluster-0.one-node-cluster.chat-with-me.svc.cluster.local:9092 \
+-- rpk --brokers one-node-cluster-0.one-node-cluster.redpanda.svc.cluster.local:9092 \
 cluster info
 
 Create a topic
-kubectl -n chat-with-me run -ti --rm \
+kubectl -n redpanda run -ti --rm \
 --restart=Never \
 --image vectorized/redpanda:$VERSION \
--- rpk --brokers one-node-cluster-0.one-node-cluster.chat-with-me.svc.cluster.local:9092 \
+-- rpk --brokers one-node-cluster-0.one-node-cluster.redpanda.svc.cluster.local:9092 \
 topic create chat-rooms -p 5
 
 Show the list of topics
-kubectl -n chat-with-me run -ti --rm \
+kubectl -n redpanda run -ti --rm \
 --restart=Never \
 --image vectorized/redpanda:$VERSION \
--- rpk --brokers one-node-cluster-0.one-node-cluster.chat-with-me.svc.cluster.local:9092 \
+-- rpk --brokers one-node-cluster-0.one-node-cluster.redpanda.svc.cluster.local:9092 \
 topic list
 
