@@ -7,6 +7,10 @@ build:
   - image: streaming-poc
     docker:
       dockerfile: Dockerfile
+  - image: extractor
+    context: metric-extractor
+    docker:
+      dockerfile: Dockerfile
 deploy:
   kustomize:
     paths:
